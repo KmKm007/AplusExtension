@@ -18,4 +18,4 @@ EstateDataPage.defaultProps = {
   title: '楼盘信息统计'
 }
 
-export default EstateDataPage;
+export default EstateDataPage

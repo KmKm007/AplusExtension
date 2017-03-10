@@ -21,7 +21,7 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap'
   }
-};
+}
 
 class EstateSearchBarView extends React.Component {
   constructor(props) {
@@ -74,11 +74,11 @@ class EstateSearchBarView extends React.Component {
 
     const defaultChipColor = '#eee'
     const selectedChipColor = '#00BCD4'
-    const selectedDistrictList = this.props.selectedDistrictList
+    const selectedDistrictIdList = this.props.selectedDistrictIdList
     const districtChipList = (
       <div style={styles.wrapper}>
         {this.props.districtList.map(district => {
-          let isExist = selectedDistrictList.some(d => district.id === d)
+          let isExist = selectedDistrictIdList.some(d => district.id === d)
           return (
             <Chip
               style={styles.chip}
@@ -93,13 +93,15 @@ class EstateSearchBarView extends React.Component {
       </div>
     )
 
+    const selectedRegionIdList = this.props.selectedRegionIdList
     const regionList = (
       <div style={styles.wrapper}>
         {this.props.regionList.map(region => {
+          let isExist = selectedRegionIdList.some(d => region.id === d)
           return (
             <Chip
               style={styles.regionChip}
-              backgroundColor={defaultChipColor}
+              backgroundColor={isExist ? selectedChipColor : defaultChipColor}
               key={region.id}
               onTouchTap={() => this.props.handleRegionChipClick(region.id)}
             >
@@ -161,4 +163,4 @@ EstateSearchBarView.PropTypes = {
   regionList: PropTypes.array.isRequired
 }
 
-export default EstateSearchBarView;
+export default EstateSearchBarView

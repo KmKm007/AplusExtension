@@ -14,7 +14,7 @@ class PageNavigation extends React.Component {
   }
 
   getChildContext() {
-    return {muiTheme: getMuiTheme(baseTheme)};
+    return {muiTheme: getMuiTheme(baseTheme)}
   }
 
   render() {
@@ -24,26 +24,26 @@ class PageNavigation extends React.Component {
     let maxPage = this.props.maxPage
     var halfPageCount = parseInt(pageCount / 2)
     if (maxPage > pageCount) {
-      let delta = maxPage - currentPage;
+      let delta = maxPage - currentPage
       if (currentPage >= (halfPageCount + 1) && delta >= halfPageCount) {
         for (let j = 0; j < halfPageCount; j++) {
-          pageArray.push(currentPage - (halfPageCount - j));
+          pageArray.push(currentPage - (halfPageCount - j))
         }
-        pageArray.push(currentPage);
+        pageArray.push(currentPage)
         for (let k = 1; k <= halfPageCount; k++) {
-          pageArray.push(currentPage + k);
+          pageArray.push(currentPage + k)
         }
       } else if (currentPage <= (halfPageCount + 1)) {
         for (let i = 1; i <= pageCount; i++) {
-          pageArray.push(i);
+          pageArray.push(i)
         }
       } else if (delta < halfPageCount) {
         for (let i = (pageCount - delta - 1); i > 0; i--) {
-          pageArray.push(currentPage - i);
+          pageArray.push(currentPage - i)
         }
-        pageArray.push(currentPage);
+        pageArray.push(currentPage)
         for (let i = 1; i <= delta; i++) {
-          pageArray.push(currentPage + i);
+          pageArray.push(currentPage + i)
         }
       }
     }
@@ -89,4 +89,4 @@ class PageNavigation extends React.Component {
     muiTheme: PropTypes.object.isRequired
   }
 
-  export default PageNavigation;
+  export default PageNavigation

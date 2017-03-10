@@ -1,5 +1,5 @@
-import React from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
+import React from 'react'
+import CircularProgress from 'material-ui/CircularProgress'
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
@@ -10,7 +10,7 @@ const style = {
 
 class Loading extends React.Component {
   getChildContext() {
-    return {muiTheme: getMuiTheme(baseTheme)};
+    return {muiTheme: getMuiTheme(baseTheme)}
   }
   render () {
     return (
@@ -23,6 +23,6 @@ class Loading extends React.Component {
 
 Loading.childContextTypes = {
   muiTheme: React.PropTypes.object.isRequired
-};
+}
 
-export default Loading;
+export default Loading

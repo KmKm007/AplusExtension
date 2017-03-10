@@ -5,7 +5,7 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
-injectTapEventPlugin();
+injectTapEventPlugin()
 
 const style = {
   heanderTitle: {
@@ -140,6 +140,6 @@ EstateData.propTypes= {
 
 EstateData.childContextTypes = {
   muiTheme: React.PropTypes.object.isRequired
-};
+}
 
-export default EstateData;
+export default EstateData

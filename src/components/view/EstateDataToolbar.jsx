@@ -32,11 +32,11 @@ class  Logged extends React.Component {
   }
 }
 
-Logged.muiName = 'IconMenu';
+Logged.muiName = 'IconMenu'
 
 class EstateDataToolbar extends React.Component {
   getChildContext() {
-    return {muiTheme: getMuiTheme(baseTheme)};
+    return {muiTheme: getMuiTheme(baseTheme)}
   }
 
   render () {
@@ -65,4 +65,4 @@ EstateDataToolbar.propTypes = {
   handleSearchBarClick: PropTypes.func.isRequired
 }
 
-export default EstateDataToolbar;
+export default EstateDataToolbar

@@ -15,4 +15,4 @@ class MainRouter extends React.Component {
   }
 }
 
-export default MainRouter;
+export default MainRouter

@@ -11,7 +11,7 @@ import { url, exportUrl, regionListUrl } from '../../appConfig/urls'
 
 class EstateDataCont extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isLoaded: false,
       dataList: null,
@@ -21,7 +21,8 @@ class EstateDataCont extends React.Component {
       showSearchBar: false,
       regionList: null,
       filter: {
-        districtList: []
+        districtIdList: [],
+        regionIdList: []
       }
     }
   }
@@ -47,7 +48,8 @@ class EstateDataCont extends React.Component {
         dataList = responseJson.dataList.sort(SORT_RULE[this.state.sortRule])
         let rowCount = dataList.length
         let pageSize = this.state.pageSize
-        maxPage = rowCount % pageSize === 0 ? rowCount / pageSize :(parseInt((rowCount / pageSize)) + 1)
+        maxPage = rowCount % pageSize === 0 ?
+                    rowCount / pageSize :(parseInt((rowCount / pageSize)) + 1)
       } else {
         console.log(responseJson.message)
       }
@@ -78,7 +80,7 @@ class EstateDataCont extends React.Component {
           regionList: responseJson.dataList
         })
       } else {
-        console.log('异常');
+        console.log('异常')
       }
 
     })
@@ -93,17 +95,25 @@ class EstateDataCont extends React.Component {
       sortRule: 'AVA_PROPERTYCOUNT_DESC'
     })
   }
-  handlePageClick(page) {
+
+  computeShownRegionList() {
+    let { regionList } = this.state
+    let selectedDistrictIdList = this.state.filter.districtIdList
+    let computedList = regionList.filter(region => {
+        return selectedDistrictIdList
+                .some(districtId => districtId === region.district.id)
+      }
+    )
+    return computedList
+  }
+
+  handlePageClick = (page) => {
     this.setState({
       currentPage: page
     })
   }
 
-  handleTableCellClick(row, id) {
-    console.log(row + '和' + id)
-  }
-
-  handleAvaPropertyCountClick() {
+  handleAvaPropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'AVA_PROPERTYCOUNT_DESC') {
@@ -118,7 +128,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handleRealPropertyCountClick() {
+  handleRealPropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'REALSUR_PROPERTYCOUNT_DESC') {
@@ -133,7 +143,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handleKeyPropertyCountClick() {
+  handleKeyPropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'KEY_PROPERTYCOUNT_DESC') {
@@ -148,7 +158,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handleTrustRecPropertyCountClick() {
+  handleTrustRecPropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'TRUSTREC_PROPERTYCOUNT_DESC') {
@@ -163,7 +173,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handlePropertyCountClick() {
+  handlePropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'PROPERTYCOUNT_DESC') {
@@ -178,7 +188,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handleBMRecomPropertyCountClick() {
+  handleBMRecomPropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'BMRECOM_PROPERTYCOUNT_DESC') {
@@ -192,7 +202,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handleBMRecomPropertyCountClick() {
+  handleBMRecomPropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'BMRECOM_PROPERTYCOUNT_DESC') {
@@ -222,7 +232,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handleNextPageClick() {
+  handleNextPageClick = () => {
     let currentPage = this.state.currentPage
     let maxPage = this.state.maxPage
     if (currentPage < maxPage) {
@@ -232,7 +242,7 @@ class EstateDataCont extends React.Component {
     }
   }
 
-  handlePrePageClick() {
+  handlePrePageClick = () => {
     let currentPage = this.state.currentPage
     if (currentPage > 1) {
       this.setState({
@@ -241,36 +251,46 @@ class EstateDataCont extends React.Component {
     }
   }
 
-  handleDataExport() {
+  handleDataExport = () => {
     window.location.href= exportUrl
   }
 
-  handleSearchBarClick(open) {
+  handleSearchBarClick = open => {
     this.setState({
       showSearchBar: open
     })
   }
 
-  handleSearchSubmit() {
+  handleSearchSubmit = () => {
     this.fetchData()
   }
 
-  handleDistrictChipCilck(id) {
+  handleDistrictChipCilck = id => {
     let filter = this.state.filter
-    let districtList = filter.districtList
-    let isExist = districtList.some( d => d === id )
+    let districtIdList = filter.districtIdList
+    let isExist = districtIdList.some( d => d === id )
     if (isExist) {
-      remove(id, districtList)
+      remove(id, districtIdList)
     } else {
-      districtList.push(id)
+      districtIdList.push(id)
     }
     this.setState({
       filter
     })
   }
 
-  handleRegionChipClick(id) {
-    console.log(id);
+  handleRegionChipClick = id => {
+    let filter = this.state.filter
+    let regionIdList = filter.regionIdList
+    let isExist = regionIdList.some( i => i === id )
+    if (isExist) {
+      remove(id, regionIdList)
+    } else {
+      regionIdList.push(id)
+    }
+    this.setState({
+      filter
+    })
   }
 
   render() {
@@ -308,12 +328,13 @@ class EstateDataCont extends React.Component {
           />
         <EstateSearchBarView
           open={ this.state.showSearchBar }
-          handleSearchBarClick ={ (open) => this.handleSearchBarClick(open) }
+          handleSearchBarClick ={ open => this.handleSearchBarClick(open) }
           districtList={districtList}
-          regionList={this.state.regionList}
-          selectedDistrictList={this.state.filter.districtList}
-          handleDistrictChipCilck={ (id) => this.handleDistrictChipCilck(id) }
-          handleRegionChipClick={ (id) => this.handleRegionChipClick(id)}
+          regionList={this.computeShownRegionList()}
+          selectedDistrictIdList={this.state.filter.districtIdList}
+          selectedRegionIdList={this.state.filter.regionIdList}
+          handleDistrictChipCilck={ id => this.handleDistrictChipCilck(id) }
+          handleRegionChipClick={ id => this.handleRegionChipClick(id)}
           handleSearchSubmit={ () => this.handleSearchSubmit() }
         />
         </div>
@@ -326,4 +347,4 @@ EstateDataCont.defaultProps = {
   tableTitle: '楼盘信息统计表'
 }
 
-export default EstateDataCont;
+export default EstateDataCont

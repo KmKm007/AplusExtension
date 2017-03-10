@@ -10,6 +10,7 @@
       "jsx": true
     }
   },
+  "extends": "eslint:recommended",
   "env": {
     "browser": true,
     "amd": true,
@@ -30,8 +31,8 @@
     "no-unreachable": 1,
     "no-alert": 0,
     "react/jsx-uses-react": 1,
-    "react/jsx-uses-vars": 1，
-    'arrow-parens': 0,
-    'generator-star-spacing': 0
+    "react/jsx-uses-vars": 1,
+    "generator-star-spacing": 0,
+    "semi": [2, "never"]
   }
 }
