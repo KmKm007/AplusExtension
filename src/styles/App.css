@@ -1,0 +1,55 @@
+/* Base Application Styles */
+body {
+  color: #fff;
+  /*background: #222;*/
+  margin: 0;
+  padding: 0;
+}
+
+.index img {
+  margin: 40px auto;
+  border-radius: 4px;
+  background: #fff;
+  display: block;
+}
+
+.index .notice {
+  margin: 20px auto;
+  padding: 15px 0;
+  text-align: center;
+  border: 1px solid #000;
+  border-width: 1px 0;
+  background: #666;
+}
+
+.nav-active {
+  color: red;
+}
+
+.cont-estate-data{
+  max-width: 1300px;
+  margin:0 auto;
+}
+
+.title {
+  margin: 10px 0;
+  color: #000;
+  text-align: center;
+}
+.table-header {
+  cursor: pointer;
+}
+
+.active-table-header {
+  color: red;
+  font-weight: bold;
+}
+
+.searchBar-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchBar-title-item {
+  margin: 5px 0
+}
