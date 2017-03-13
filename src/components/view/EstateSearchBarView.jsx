@@ -14,7 +14,7 @@ const styles = {
   },
   regionChip: {
     margin: 4,
-    width: '117px',
+    width: '114px',
     justifyContent: 'center'
   },
   wrapper: {
@@ -35,27 +35,35 @@ class EstateSearchBarView extends React.Component {
     return { muiTheme: getMuiTheme(baseTheme) }
   }
 
-  handleDistrictSwitch(isShowDistrictBar) {
+  handleDistrictSwitch = (isShowDistrictBar) => {
     this.setState({
       isShowDistrictBar
     })
   }
 
-  handleRegionSwitch(isShowRegionBar) {
+  handleRegionSwitch = (isShowRegionBar) => {
     this.setState({
       isShowRegionBar
     })
   }
 
-  handleSearchSubmitBtnClick() {
+  handleSearchSubmitBtnClick= () => {
     this.props.handleSearchSubmit()
     this.props.handleSearchBarClick(false)
   }
 
-  handleSearchClose() {
+  handleSearchClose = () => {
     this.handleDistrictSwitch(false)
     this.handleRegionSwitch(false)
     this.props.handleSearchBarClick(false)
+  }
+
+  isSelectedDistrictEmpty() {
+    if (!this.props.selectedDistrictIdList || this.props.selectedDistrictIdList.length === 0) {
+      return true
+    } else {
+      return false
+    }
   }
 
   render () {
@@ -112,6 +120,8 @@ class EstateSearchBarView extends React.Component {
       </div>
     )
 
+    let isSelectedDistrictEmpty = this.isSelectedDistrictEmpty()
+
     return (
       <div>
         <Dialog
@@ -136,12 +146,15 @@ class EstateSearchBarView extends React.Component {
             <header className="searchBar-title">
               <h4 className="searchBar-title-item">片区</h4>
               <Toggle
+                disabled={isSelectedDistrictEmpty}
                 style={{width: '80px'}}
                 label="展开"
                 onToggle={(object, isOpen) => this.handleRegionSwitch(isOpen)}
               />
             </header>
-            {this.state.isShowRegionBar ? regionList : null}
+            <div className="list-region">
+              {this.state.isShowRegionBar ? regionList : null}
+            </div>
           </div>
         </Dialog>
       </div>

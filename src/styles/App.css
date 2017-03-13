@@ -53,3 +53,9 @@ body {
 .searchBar-title-item {
   margin: 5px 0
 }
+
+.list-region{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 220px;
+}

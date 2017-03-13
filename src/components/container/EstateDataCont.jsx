@@ -271,8 +271,20 @@ class EstateDataCont extends React.Component {
     let isExist = districtIdList.some( d => d === id )
     if (isExist) {
       remove(id, districtIdList)
+      let regionList = this.state.regionList.filter(region => id === region.district.id)
+      let selectedRegionIdList = filter.regionIdList
+      filter.regionIdList = selectedRegionIdList.filter(regionId => {
+        let isInList = regionList.some(region => region.id === regionId)
+        return !isInList
+      })
     } else {
       districtIdList.push(id)
+      let regionFilterList = this.state.regionList.filter(region => id === region.district.id)
+      let addList = regionFilterList.reduce((arr, region )=>{
+        return [...arr, region.id]
+      } ,[])
+      let regionIdList = filter.regionIdList.concat(addList)
+      filter.regionIdList = regionIdList
     }
     this.setState({
       filter
