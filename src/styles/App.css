@@ -48,14 +48,21 @@ body {
 .searchBar-title {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .searchBar-title-item {
   margin: 5px 0
 }
 
-.list-region{
+.list-region {
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: 220px;
+}
+
+.con-flex1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

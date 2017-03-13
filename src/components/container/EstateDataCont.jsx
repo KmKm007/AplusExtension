@@ -7,7 +7,7 @@ import EstateSearchBarView from '../view/EstateSearchBarView'
 import districtList from '../../constant/districtList.js'
 import { remove } from '../../util/ArrayUtil'
 import SORT_RULE from '../../constant/sortRule'
-import { url, exportUrl, regionListUrl } from '../../appConfig/urls'
+import { url, exportUrl,downloadUrl, regionListUrl } from '../../appConfig/urls'
 
 class EstateDataCont extends React.Component {
   constructor(props) {
@@ -217,7 +217,7 @@ class EstateDataCont extends React.Component {
     })
   }
 
-  handleDMRecomPropertyCountClick() {
+  handleDMRecomPropertyCountClick = () => {
     let sortRule = this.state.sortRule
     let rule
     if (sortRule === 'DMRECOM_PROPERTYCOUNT_DESC') {
@@ -252,7 +252,24 @@ class EstateDataCont extends React.Component {
   }
 
   handleDataExport = () => {
-    window.location.href= exportUrl
+    let url = exportUrl
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'filter=' + JSON.stringify(this.state.filter)
+    })
+    .then(resp => resp.json())
+    .then(respJson => {
+      if (respJson.status === 0) {
+          let code = respJson.code
+          console.log(downloadUrl)
+          window.location.href = downloadUrl + '?code=' + code
+      } else {
+        console.log(respJson.message)
+      }
+    })
   }
 
   handleSearchBarClick = open => {
@@ -305,6 +322,14 @@ class EstateDataCont extends React.Component {
     })
   }
 
+  handleRegionClear = () => {
+    let filter = this.state.filter
+    filter.regionIdList = []
+    this.setState({
+      filter
+    })
+  }
+
   render() {
     if (!this.state.isLoaded)
       return <Loading />
@@ -318,36 +343,37 @@ class EstateDataCont extends React.Component {
         <div>
           <EstateDataToolbar
             title={this.props.tableTitle}
-            handleDataExport={() => this.handleDataExport()}
-            handleSearchBarClick={ (open) => this.handleSearchBarClick(open) }
+            handleDataExport={this.handleDataExport}
+            handleSearchBarClick={this.handleSearchBarClick}
           />
           <EstateData
             dataList={renderDataList}
-            handleTableCellClick={ (row, id) => this.handleTableCellClick(row, id) }
-            handleAvaPropertyCountClick={ () => this.handleAvaPropertyCountClick() }
-            handlePropertyCountClick={ () => this.handlePropertyCountClick() }
-            handleTrustRecPropertyCountClick={ () => this.handleTrustRecPropertyCountClick() }
-            handleRealPropertyCountClick={ () => this.handleRealPropertyCountClick() }
-            handleKeyPropertyCountClick={ () => this.handleKeyPropertyCountClick() }
-            handleBMRecomPropertyCountClick={ () => this.handleBMRecomPropertyCountClick() }
-            handleDMRecomPropertyCountClick={ () => this.handleDMRecomPropertyCountClick() }
+            handleTableCellClick={this.handleTableCellClick}
+            handleAvaPropertyCountClick={this.handleAvaPropertyCountClick}
+            handlePropertyCountClick={this.handlePropertyCountClick}
+            handleTrustRecPropertyCountClick={this.handleTrustRecPropertyCountClick}
+            handleRealPropertyCountClick={this.handleRealPropertyCountClick}
+            handleKeyPropertyCountClick={this.handleKeyPropertyCountClick}
+            handleBMRecomPropertyCountClick={this.handleBMRecomPropertyCountClick}
+            handleDMRecomPropertyCountClick={this.handleDMRecomPropertyCountClick}
             sortRule={this.state.sortRule}
           />
           <PageNavigation currentPage={currentPage} maxPage ={maxPage}
-            handlePageClick={ page => this.handlePageClick(page)}
-            handlePrePageClick={ () => this.handlePrePageClick() }
-            handleNextPageClick={ () => this.handleNextPageClick() }
+            handlePageClick={this.handlePageClick}
+            handlePrePageClick={ this.handlePrePageClick}
+            handleNextPageClick={this.handleNextPageClick}
           />
         <EstateSearchBarView
           open={ this.state.showSearchBar }
-          handleSearchBarClick ={ open => this.handleSearchBarClick(open) }
+          handleSearchBarClick ={this.handleSearchBarClick}
           districtList={districtList}
           regionList={this.computeShownRegionList()}
           selectedDistrictIdList={this.state.filter.districtIdList}
           selectedRegionIdList={this.state.filter.regionIdList}
-          handleDistrictChipCilck={ id => this.handleDistrictChipCilck(id) }
-          handleRegionChipClick={ id => this.handleRegionChipClick(id)}
-          handleSearchSubmit={ () => this.handleSearchSubmit() }
+          handleDistrictChipCilck={this.handleDistrictChipCilck}
+          handleRegionChipClick={this.handleRegionChipClick}
+          handleSearchSubmit={this.handleSearchSubmit}
+          handleRegionClearBtnClick={this.handleRegionClearBtnClick}
         />
         </div>
       )

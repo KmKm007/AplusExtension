@@ -134,23 +134,31 @@ class EstateSearchBarView extends React.Component {
           <div className="districtbar">
             <header className="searchBar-title">
               <h4 className="searchBar-title-item">城区</h4>
-              <Toggle
-                style={{width: '80px'}}
-                label="展开"
-                onToggle={(object, isOpen) => this.handleDistrictSwitch(isOpen)}
-              />
+                <Toggle
+                  style={{width: '80px'}}
+                  label="展开"
+                  onToggle={(object, isOpen) => this.handleDistrictSwitch(isOpen)}
+                />
             </header>
             {this.state.isShowDistrictBar ? districtChipList : null}
           </div>
           <div className="regionBar">
             <header className="searchBar-title">
               <h4 className="searchBar-title-item">片区</h4>
-              <Toggle
-                disabled={isSelectedDistrictEmpty}
-                style={{width: '80px'}}
-                label="展开"
-                onToggle={(object, isOpen) => this.handleRegionSwitch(isOpen)}
-              />
+              <div className="con-flex1">
+                <FlatButton
+                  disabled={isSelectedDistrictEmpty}
+                  label="清除"
+                  onTouchTap={this.props.handleRegionClearBtnClick}
+                  style={{lineHeight: 'auto', height: 'auto'}}
+                />
+                <Toggle
+                  disabled={isSelectedDistrictEmpty}
+                  style={{width: '80px'}}
+                  label="展开"
+                  onToggle={(object, isOpen) => this.handleRegionSwitch(isOpen)}
+                />
+              </div>
             </header>
             <div className="list-region">
               {this.state.isShowRegionBar ? regionList : null}
@@ -172,6 +180,7 @@ EstateSearchBarView.PropTypes = {
   handleSearchSubmit: PropTypes.func.isRequired,
   handleDistrictChipCilck: PropTypes.func.isRequired,
   handleRegionChipClick: PropTypes.func.isRequired,
+  handleRegionClearBtnClick: PropTypes.func.isRequired,
   districtList: PropTypes.array.isRequired,
   regionList: PropTypes.array.isRequired
 }
