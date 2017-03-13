@@ -373,7 +373,7 @@ class EstateDataCont extends React.Component {
           handleDistrictChipCilck={this.handleDistrictChipCilck}
           handleRegionChipClick={this.handleRegionChipClick}
           handleSearchSubmit={this.handleSearchSubmit}
-          handleRegionClearBtnClick={this.handleRegionClearBtnClick}
+          handleRegionClearBtnClick={this.handleRegionClear}
         />
         </div>
       )

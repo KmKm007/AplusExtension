@@ -63,7 +63,7 @@ class EstateData extends React.Component {
           >
             <TableRow>
               <TableHeaderColumn>行政区</TableHeaderColumn>
-              <TableHeaderColumn>片区</TableHeaderColumn>
+              <TableHeaderColumn style={style.t6}>片区</TableHeaderColumn>
               <TableHeaderColumn style={style.t7}>楼盘</TableHeaderColumn>
               <TableHeaderColumn>
                 <a className={sortRule === 'PROPERTYCOUNT_ASC' || sortRule === 'PROPERTYCOUNT_DESC' ? activeHeaderClass : headerClass}
@@ -109,7 +109,7 @@ class EstateData extends React.Component {
             return (
               <TableRow key={index}>
                 <TableRowColumn>{data.estate.district.name}</TableRowColumn>
-                <TableRowColumn>{data.estate.region.name}</TableRowColumn>
+                <TableRowColumn style={style.t6}>{data.estate.region.name}</TableRowColumn>
                 <TableRowColumn style={style.t7}><span title={data.estate.name}>{data.estate.name}</span></TableRowColumn>
                 <TableRowColumn>{data.propertyCount}</TableRowColumn>
                 <TableRowColumn>{data.avaPropertyCount}</TableRowColumn>
@@ -130,7 +130,6 @@ class EstateData extends React.Component {
 
 EstateData.propTypes= {
   dataList: PropTypes.array.isRequired,
-  handleTableCellClick: PropTypes.func.isRequired,
   handlePropertyCountClick: PropTypes.func.isRequired,
   handleAvaPropertyCountClick: PropTypes.func.isRequired,
   handleRealPropertyCountClick: PropTypes.func.isRequired,
